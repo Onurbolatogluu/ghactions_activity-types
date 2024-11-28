@@ -1,0 +1,25 @@
+name: Etiket Oluşturulduğunda Çalışan Workflow
+
+on:
+  label:
+    types:
+      - created
+
+jobs:
+  handle_label_creation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Etiket Bilgilerini Al
+        run: |
+          echo "Yeni etiket oluşturuldu!"
+          echo "Etiket Adı: ${{ github.event.label.name }}"
+          echo "Etiket Açıklaması: ${{ github.event.label.description }}"
+          echo "Etiket Rengi: #${{ github.event.label.color }}"
+      
+      - name: Etiketi Logla
+        run: |
+          echo "Etiket Adı: ${{ github.event.label.name }}" >> etikets.log
+          echo "Etiket Açıklaması: ${{ github.event.label.description }}" >> etikets.log
+          echo "Etiket Rengi: #${{ github.event.label.color }}" >> etikets.log
+          cat etikets.log
